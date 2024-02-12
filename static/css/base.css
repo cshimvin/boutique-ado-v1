@@ -80,6 +80,7 @@ body {
         z-index: 1030;
     }
 
+    /* push the body of the page under the main page header */
     .header-container {
         padding-top: 164px;
     }
