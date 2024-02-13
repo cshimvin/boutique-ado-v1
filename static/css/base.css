@@ -3,16 +3,14 @@ html {
 }
 
 body {
-    background: url('/media/homepage_background_cropped.jpg') no-repeat center center fixed;
-    background-size: cover;
-    /* Subtract the size of the header from the 100% view height */
+	background: url('/media/homepage_background_cropped.jpg') no-repeat center center fixed;
+	background-size: cover;
     height: calc(100vh - 164px);
     color: #555;
-    font-family: 'Lato';
+    font-family: "Lato";
 }
 
 /* from Bulma */
-/* Make sure icons are always centered and a consistent neight and width */
 .icon {
     align-items: center;
     display: inline-flex;
@@ -21,13 +19,10 @@ body {
     width: 1.5rem;
 }
 
-/* Ensure logo fonts are always uppercase */
 .logo-font {
     text-transform: uppercase;
 }
 
-
-/* Make sure the width of the link is only as wide as the content within it */
 .main-logo-link {
     width: fit-content;
 }
@@ -61,7 +56,11 @@ body {
     border: 1px solid black !important;
 }
 
-/* -------------------------------- Media Queries */
+.bg-black {
+    background: #000 !important;
+}
+
+/* --------------------------------- Media queries */
 
 /* Slightly larger container on xl screens */
 @media (min-width: 1200px) {
@@ -80,7 +79,6 @@ body {
         z-index: 1030;
     }
 
-    /* push the body of the page under the main page header */
     .header-container {
         padding-top: 164px;
     }
