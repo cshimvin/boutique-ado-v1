@@ -8,7 +8,7 @@ class Category(models.Model):
     # Fix spelling of plural category name in admin
     class Meta:
         verbose_name_plural = 'Categories'
-    
+
     name = models.CharField(max_length=254)
     # This is a displayable name on the website
     # null=True and blank=True means it's optional
@@ -28,12 +28,14 @@ class Product(models.Model):
     # Category taken from the categories table. Can be optional. If it
     # is deleted, then set the category to NULL instead of deleting all
     # products for that category
-    category = models.ForeignKey('Category', null=True, blank=True, on_delete=models.SET_NULL)
+    category = models.ForeignKey('Category', null=True,
+                                 blank=True, on_delete=models.SET_NULL)
     sku = models.CharField(max_length=254, null=True, blank=True)
     name = models.CharField(max_length=254)
     description = models.TextField()
     price = models.DecimalField(max_digits=6, decimal_places=2)
-    rating = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
+    rating = models.DecimalField(max_digits=6, decimal_places=2,
+                                 null=True, blank=True)
     image_url = models.URLField(max_length=1024, null=True, blank=True)
     image = models.ImageField(null=True, blank=True)
 
