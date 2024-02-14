@@ -60,6 +60,18 @@ body {
     background: #000 !important;
 }
 
+/* Create a white overlay to hide the background image on non-homepage views */
+.overlay {
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    position: fixed;
+    background: white;
+    /* Ensure white background shows behind text and other elements */
+    z-index: -1;
+}
+
 /* --------------------------------- Media queries */
 
 /* Slightly larger container on xl screens */
