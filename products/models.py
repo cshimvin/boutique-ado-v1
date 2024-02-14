@@ -5,6 +5,10 @@ from django.db import models
 
 class Category(models.Model):
     """ Categories model for the database """
+    # Fix spelling of plural category name in admin
+    class Meta:
+        verbose_name_plural = 'Categories'
+    
     name = models.CharField(max_length=254)
     # This is a displayable name on the website
     # null=True and blank=True means it's optional
