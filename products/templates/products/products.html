@@ -115,4 +115,60 @@
             </div>
         </div>
     </div>
+    <!-- Back to top logo and button -->
+    <div class="btt-button shadow-sm rounded-0 border border-black">
+        <a class="btt-link d-flex h-100">
+            <i class="fas fa-arrow-up text-black mx-auto my-auto"></i>
+        </a>	
+    </div>
+{% endblock %}
+
+{% block postloadjs %}
+    <!-- append any existing code in this block rather than replacing it -->
+    {{ block.super }}
+    <!-- Back to top link -->
+    <script type="text/javascript">
+		$('.btt-link').click(function(e) {
+			window.scrollTo(0,0)
+		})
+	</script>
+
+    <!-- Sort selector functionality -->
+    <script type="text/javascript">
+        // Check if the sort selector box has changed
+        $('#sort-selector').change(function() {
+            
+            // get the selector box
+            var selector = $(this);
+            
+            // get the current URL
+            var currentUrl = new URL(window.location);
+            
+            // get the value from the selector
+            var selectedVal = selector.val();
+            
+            // check if the selected value is not reset
+            if (selectedVal != "reset"){
+                
+                // get the query parameters from the selected item by splitting by the underscore
+                var sort = selectedVal.split("_")[0];
+                var direction = selectedVal.split("_")[1];
+                
+                // append the current URL with the sort paramaters above
+                currentUrl.searchParams.set("sort", sort);
+                currentUrl.searchParams.set("direction", direction);
+
+                // replace the current URL with the new URL and reload the page
+                window.location.replace(currentUrl);
+            } else {
+                
+                // If the reset option is selected then delete the search parameters from the URL to display all products
+                currentUrl.searchParams.delete("sort");
+                currentUrl.searchParams.delete("direction")
+
+                // replace the current URL with the new URL and reload the page
+                window.location.replace(currentUrl)
+            }
+        })
+    </script>
 {% endblock %}
