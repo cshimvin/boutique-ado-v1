@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect, reverse
 from django.contrib import messages
 # Import query library for search form
 from django.db.models import Q
+from django.db.models.functions import Lower
 from .models import Product, Category
 # Create your views here.
 
@@ -16,9 +17,27 @@ def all_products(request):
     # Set search term and category to None to prevent errors
     query = None
     categories = None
+    sort = None
+    direction = None
 
     # Check if GET action performed
     if request.GET:
+        # Check if sort has been requested
+        if 'sort' in request.GET:
+            # Create a key to sort on
+            sortkey = request.GET['sort']
+            # Preserve the original request
+            sort = sortkey
+            if sortkey == 'name':
+                sortkey = 'lower_name'
+                products = products.annotate(lower_name=Lower('name'))
+
+            if 'direction' in request.GET:
+                direction = request.GET['direction']
+                if direction == 'desc':
+                    sortkey = f'-{sortkey}'
+                products = products.order_by(sortkey)
+
         # Check if a specific category was selected
         if 'category' in request.GET:
             # If more than one category in the comma-separated list, then
@@ -44,10 +63,13 @@ def all_products(request):
             # Filter products based on the query
             products = products.filter(queries)
 
+    current_sorting = f'{sort}_{direction}'
+
     context = {
         "products": products,
         'search_term': query,
         'current_categories': categories,
+        'current_sorting': current_sorting,   
     }
     return render(request, "products/products.html", context)
 
