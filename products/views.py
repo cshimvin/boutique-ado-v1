@@ -28,16 +28,17 @@ def all_products(request):
             sortkey = request.GET['sort']
             # Preserve the original request
             sort = sortkey
-            if sortkey == 'name':
+            if sortkey == "name":
                 sortkey = 'lower_name'
-                products = products.annotate(lower_name=Lower('name'))
+                products = products.annotate(lower_name=Lower("name"))
             if sortkey == 'category':
                 sortkey = 'category__name'
             if 'direction' in request.GET:
                 direction = request.GET['direction']
-                if direction == 'desc':
+                if direction == "desc":
                     sortkey = f'-{sortkey}'
-                products = products.order_by(sortkey)
+
+            products = products.order_by(sortkey)
 
         # Check if a specific category was selected
         if 'category' in request.GET:
@@ -70,7 +71,7 @@ def all_products(request):
         "products": products,
         'search_term': query,
         'current_categories': categories,
-        'current_sorting': current_sorting,
+        'current_sorting': current_sorting
     }
     return render(request, "products/products.html", context)
 
