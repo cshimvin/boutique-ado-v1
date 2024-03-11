@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect, reverse, HttpResponse
 from django.contrib import messages
+
 from products.models import Product
 
 # Create your views here.
@@ -22,27 +23,21 @@ def add_to_bag(request, item_id):
         size = request.POST['product_size']
     bag = request.session.get('bag', {})
 
-    # check if there is a size
     if size:
         if item_id in list(bag.keys()):
-            # if an item of that size already exists,
-            # increase quantity by 1
             if size in bag[item_id]['items_by_size'].keys():
                 bag[item_id]['items_by_size'][size] += quantity
             else:
-                # otherwise if item is in the bag but a new size
-                # has been added, add the item with the new size
                 bag[item_id]['items_by_size'][size] = quantity
         else:
-            # If a new item is added with a size, add to bag
             bag[item_id] = {'items_by_size': {size: quantity}}
     else:
-        # if item doesn't have a size, add to bag without size
         if item_id in list(bag.keys()):
             bag[item_id] += quantity
+            messages.success(request, f'Added {product.name} to your bag')
         else:
             bag[item_id] = quantity
-            messages.success(request, f'Added {product.name} to bag.')
+            # messages.success(request, f'Added {product.name} to your bag')
 
     request.session['bag'] = bag
     return redirect(redirect_url)
@@ -92,5 +87,6 @@ def remove_from_bag(request, item_id):
 
         request.session['bag'] = bag
         return HttpResponse(status=200)
+
     except Exception as e:
         return HttpResponse(status=500)
