@@ -6,13 +6,10 @@
     https://stripe.com/docs/stripe-js
 */
 
-/* Get elements from template and remove quotation marks */
 var stripePublicKey = $('#id_stripe_public_key').text().slice(1, -1);
 var clientSecret = $('#id_client_secret').text().slice(1, -1);
-/* Set up Stripe (included in Stripe JS) */
 var stripe = Stripe(stripePublicKey);
 var elements = stripe.elements();
-/* Add styling (From Stripe docs) */
 var style = {
     base: {
         color: '#000',
@@ -28,9 +25,8 @@ var style = {
         iconColor: '#dc3545'
     }
 };
-var card = elements.create('card', {style: style})
-/* Attach it to the #card-element id in the template */
-card.mount('#card-element')
+var card = elements.create('card', {style: style});
+card.mount('#card-element');
 
 // Handle realtime validation errors on the card element
 card.addEventListener('change', function (event) {
@@ -52,7 +48,6 @@ card.addEventListener('change', function (event) {
 var form = document.getElementById('payment-form');
 
 form.addEventListener('submit', function(ev) {
-    // Prevent multiple submissions
     ev.preventDefault();
     card.update({ 'disabled': true});
     $('#submit-button').attr('disabled', true);
@@ -100,7 +95,6 @@ form.addEventListener('submit', function(ev) {
             },
         }).then(function(result) {
             if (result.error) {
-                // show error to customer (e.g. insufficient funds)
                 var errorDiv = document.getElementById('card-errors');
                 var html = `
                     <span class="icon" role="alert">
@@ -110,11 +104,9 @@ form.addEventListener('submit', function(ev) {
                 $(errorDiv).html(html);
                 $('#payment-form').fadeToggle(100);
                 $('#loading-overlay').fadeToggle(100);
-                // Reenable card element to allow customer to fix errors
                 card.update({ 'disabled': false});
                 $('#submit-button').attr('disabled', false);
             } else {
-                // Payment has been processed
                 if (result.paymentIntent.status === 'succeeded') {
                     form.submit();
                 }
