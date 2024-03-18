@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 import os
 from pathlib import Path
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -106,10 +107,13 @@ SITE_ID = 1
 # logs email confirmation to console
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
-ACCOUNT_AUTHENTICATION_METHOD = 'username_email'  # user username or email to register/log in
+# user username or email to register/log in
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
 ACCOUNT_EMAIL_REQUIRED = True  # require email address to register
-ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # require user to verify their email address
-ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True  # require user to enter email address twice to confirm correct
+# require user to verify their email address
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+# require user to enter email address twice to confirm correct
+ACCOUNT_SIGNUP_EMAIL_ENTER_TWICE = True
 ACCOUNT_USERNAME_MIN_LENGTH = 4  # minimum length of username is 4 chars
 LOGIN_URL = '/accounts/login/'  # login URL
 LOGIN_REDIRECT_URL = '/'  # URL to redirect to when successfully logged in
@@ -119,13 +123,6 @@ WSGI_APPLICATION = 'boutique_ado.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 
 # Password validation
