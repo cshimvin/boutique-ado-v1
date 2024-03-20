@@ -14,9 +14,6 @@ import os
 from pathlib import Path
 import dj_database_url
 
-import mimetypes
-mimetypes.add_type("text/css", ".css", True)
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -187,7 +184,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # AWS settings
 
-    # Cache control
+# Cache control
 AWS_S3_OBJECT_PARAMETERS = {
     'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
     'CacheControl': 'max-age=94608000',
